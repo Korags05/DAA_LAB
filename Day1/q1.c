@@ -15,13 +15,12 @@ int main() {
         scanf("%d", &arr[i]);
     }
 
-    for(int i=0;i<n;i++)
-    {
+    //bubble sort to sort the array in descending order
+    //this will help us find the second smallest and second largest elements
+    for(int i=0;i<n;i++) {
         int temp;
-        for(int j=i+1; j<n ;j++)
-        {
-            if(arr[i]<arr[j])
-            {
+        for(int j=i+1; j<n ;j++) {
+            if(arr[i]<arr[j]) {
                 temp=arr[i];
                 arr[i]=arr[j];
                 arr[j]=temp;
