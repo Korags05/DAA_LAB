@@ -5,21 +5,26 @@ Aim of the program: Write a program to read ‘n’ integers from a disc file th
 */
 
 #include <stdio.h>
-int main() {
 
+int main() {
+    FILE *fp;
     int n;
 
-    printf("Enter the size of array: ");
-    scanf("%d", &n);
+    fp = fopen("input3.txt", "r");
+    if (fp == NULL) {
+        printf("Error opening file.\n");
+        return 1;
+    }   
 
+    fscanf(fp, "%d", &n);
     int arr[n], freq[n];
 
-    // Input array elements
-    printf("Enter %d integers:\n", n);
     for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-        freq[i] = -1;  
+        fscanf(fp, "%d", &arr[i]);
+        freq[i] = -1;
     }
+
+    fclose(fp);
 
     for (int i = 0; i < n; i++) {
         if (freq[i] == -1) {
@@ -27,14 +32,13 @@ int main() {
             for (int j = i + 1; j < n; j++) {
                 if (arr[i] == arr[j]) {
                     count++;
-                    freq[j] = 0;  // Mark as counted
+                    freq[j] = 0;
                 }
             }
             freq[i] = count;
         }
     }
 
-    // (a) Count total number of duplicate elements
     int totalDuplicates = 0;
     for (int i = 0; i < n; i++) {
         if (freq[i] > 1) {
@@ -42,7 +46,6 @@ int main() {
         }
     }
 
-    // (b) Find most repeating element
     int maxFreq = 0, mostRepeating;
     for (int i = 0; i < n; i++) {
         if (freq[i] > maxFreq) {
@@ -51,9 +54,13 @@ int main() {
         }
     }
 
-    // Output
-    printf("\nTotal number of duplicate elements: %d\n", totalDuplicates);
-    printf("Most repeating element: %d (repeated %d times)\n", mostRepeating, maxFreq);
+    printf("The content of the array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    printf("\nTotal number of duplicate values = %d\n", totalDuplicates);
+    printf("The most repeating element in the array = %d (repeated %d times)\n", mostRepeating, maxFreq);
 
     return 0;
 }
