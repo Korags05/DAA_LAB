@@ -4,35 +4,39 @@ element stored in an array of n integers.
 */
 
 #include <stdio.h>
-int main() {
 
+int main() {
+    FILE *fp;
     int n;
-    printf("Enter the size of the array: ");
-    scanf("%d", &n);
-    int arr[n];
-    printf("Enter the array elements:\n");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
+
+    fp = fopen("input1.txt", "r");
+    if (fp == NULL) {
+        printf("Error opening file.\n");
+        return 1;
     }
 
-    //bubble sort to sort the array in descending order
-    //this will help us find the second smallest and second largest elements
-    for(int i=0;i<n;i++) {
-        int temp;
-        for(int j=i+1; j<n ;j++) {
-            if(arr[i]<arr[j]) {
-                temp=arr[i];
-                arr[i]=arr[j];
-                arr[j]=temp;
+    fscanf(fp, "%d", &n);
+    int arr[n];
+    
+    for (int i = 0; i < n; i++) {
+        fscanf(fp, "%d", &arr[i]);
+    }
+
+    fclose(fp); // close the file
+
+    // bubble sort to sort the array in descending order
+    for(int i = 0; i < n; i++) {
+        for(int j = i + 1; j < n; j++) {
+            if(arr[i] < arr[j]) {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
     }
 
-    //second smallest is at n-2 index after sorting
-    printf("The second smallest element is %d",arr[n-2]); 
-    printf("\n");
+    printf("The second smallest element is %d\n", arr[n - 2]);
+    printf("The second largest element is %d\n", arr[1]);
 
-    //second largest
-    printf("The second largest element is %d",arr[1]); 
     return 0;
 }
